@@ -27,12 +27,12 @@
       "matches": ["http://*/*"],
       "js": [
         "content.js",
-        "jquery/3.0.0/jquery.min.js"
+        "jquery/3.0.0-slim/jquery.slim.min.js"
       ]
     }
   ],
   "web_accessible_resources": [
     "content.js",
-    "jquery/3.0.0/jquery.min.js"
+    "jquery/3.0.0-slim/jquery.slim.min.js"
   ]
 }

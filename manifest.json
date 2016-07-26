@@ -1,15 +1,17 @@
 ﻿{
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "ContextDeleter",
-  "description": "Chrome extension that allows you to delete elements from the context menu.",
-  "version": "0.2.0",
+  "description": "ContextDeleter allows you to delete HTML elements on the fly.",
+  "version": "2.0.0",
   "permissions": [ 
       "contextMenus", 
       "tabs", 
       "http://*/*"
   ],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "background.js"
+    ]
   },
   "icons": {
     "16": "icons/16.png",
@@ -23,11 +25,14 @@
   "content_scripts": [
     {
       "matches": ["http://*/*"],
-      "js": ["content.js", "jquery.min.js"]
+      "js": [
+        "content.js",
+        "jquery/3.0.0/jquery.min.js"
+      ]
     }
   ],
   "web_accessible_resources": [
     "content.js",
-    "jquery.min.js"
+    "jquery/3.0.0/jquery.min.js"
   ]
 }

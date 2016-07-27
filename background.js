@@ -1,18 +1,12 @@
-﻿var e = chrome.contextMenus.create({
-    "type": "normal",
-    "title": "Delete This Element",
-    "contexts": [
-        "all",
-        "page",
-        "frame",
-        "selection",
-        "link",
-        "editable",
-        "image",
-        "video",
-        "audio"
-    ],
-    "onclick": function(info, tab){
-      chrome.tabs.sendRequest(tab.id, "deleteElement")
-    } 
+﻿var bkg = chrome.extension.getBackgroundPage();
+
+chrome.contextMenus.onClicked.addListener(function(info, tab){
+    chrome.tabs.sendMessage(tab.id, {'action': 'deleteElement'});
+});
+
+chrome.contextMenus.create({
+    'id': 'ContextDeleterZap',
+    'type': 'normal',
+    'title': chrome.i18n.getMessage('openContextMenuTitle'),
+    'contexts': ['all']
 });

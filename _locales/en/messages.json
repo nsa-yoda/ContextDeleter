@@ -1,0 +1,14 @@
+{
+  "extName": {
+    "message": "ContextDeleter",
+    "description": "Extension name"
+  },
+  "extDesc": {
+    "message": "ContextDeleter allows you to delete HTML elements on the fly.",
+    "description": "Extension description"
+  },
+  "openContextMenuTitle": {
+    "message": "Delete This Element",
+    "description": "Context menu button text"
+  }
+}

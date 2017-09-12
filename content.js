@@ -1,6 +1,6 @@
 ﻿var clickedElement; // the clicked element
 var clickedElementCopy; // copy of the clicked element for posterity
-var originalBorderStyle; // contains the original styles of the element
+var originalOutlineStyle; // contains the original styles of the element
 
 var contains = function (needle, indexOf) {
     var findNaN = needle !== needle; // identify NaN needle
@@ -22,44 +22,58 @@ var contains = function (needle, indexOf) {
     return indexOf.call(this, needle) > -1;
 };
 
-jQuery(document).on('mousedown', function (event) {
-    var config = {
+jQuery(document).on('mousedown', 'body', function (event) {
+    chrome.storage.sync.get({
+        highlightColor: '0,0,255',
+        highlightOpacity: 0.3,
+        outlineStyle: 'solid',
+        outlineWidth: '1px'
+    }, function(items) {
+        var highlightColor = items.highlightColor;
+        var highlightOpacity = items.highlightOpacity;
+        var outlineStyle = items.outlineStyle;
+        var outlineWidth = items.outlineWidth;
+
+        var config = {
             'event': {
                 'button': {
                     'target': [2],           // buttons to listen to target an element
                     'exit': [1, 0]           // buttons to listen to exit
                 }
             },
-            'border': '1px solid blue'    // default border for selection
+            'outline': outlineWidth + ' ' + outlineStyle + ' rgba(' + highlightColor + ', ' + highlightOpacity + ')'    // default outline for selection
         };
 
-    if ( contains.call(config['event']['button']['target'], event.button) ) {
-        // in case of retargetting, reset the border style of the old targetted element
-        if (clickedElementCopy != null && $(clickedElementCopy).css('border') != originalBorderStyle){
-            $(clickedElementCopy).css('border', originalBorderStyle);
+        if (highlightColor === "transparent") { config['outline'] = 'none'; }
+
+        if ( contains.call(config['event']['button']['target'], event.button) ) {
+            // in case of re-targeting, reset the outline style of the old targeted element
+            if (clickedElementCopy !== null && $(clickedElementCopy).css('outline') !== originalOutlineStyle){
+                $(clickedElementCopy).css('outline', originalOutlineStyle);
+            }
+
+            clickedElement = event.target;
+            originalOutlineStyle = $(clickedElement).css('outline'); // store the original outline style
+
+            // set the target outline
+            $(clickedElement).css('outline', config['outline']);
+
+            // make a copy of the clicked element
+            if ( clickedElement !== clickedElementCopy ) {
+                clickedElementCopy = clickedElement
+            }
         }
 
-        clickedElement = event.target;
-        originalBorderStyle = $(clickedElement).css('border'); // store the original border style
-
-        // set the target border
-        $(clickedElement).css('border', config['border']);
-
-        // make a copy of the clicked element
-        if ( clickedElement != clickedElementCopy ) {
-            clickedElementCopy = clickedElement
+        if ( contains.call(config['event']['button']['exit'], event.button) ){
+            if ( originalOutlineStyle !== null ){
+                $(clickedElementCopy).css('outline', originalOutlineStyle);
+            }
         }
-    }
-
-    if ( contains.call(config['event']['button']['exit'], event.button) ){
-        if ( originalBorderStyle !== null ){
-            $(clickedElementCopy).css('border', originalBorderStyle);
-        }
-    }
+    });
 });
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.action == "deleteElement") {
+    if (request.action === "deleteElement") {
         $(clickedElement).remove();
     }
     sendResponse({value: "ok"})

@@ -23,6 +23,17 @@
             text-align: center;
             margin-bottom:0;
         }
+        #preview {
+            border: 1px solid black;
+            width: 16rem;
+            padding: 1rem;
+            margin-left: 26rem;
+            background-color: white;
+            text-align: center;
+        }
+        #hey_its_me_debug{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -31,16 +42,40 @@
     <h1>ContextDeleter</h1>
     <h3>by <a href="http://juanleonardosanchez.com" target="_blank">Juan L. Sanchez</a></h3>
 
+
     <h2>Options</h2>
-    <form>
+    <form name="options_form" id="options_form">
+        <div class="preview" id="preview">Preview <span id="hey_its_me_debug">[Debug]</span></div>
         <fieldset>
             <label for="color">Outline color:</label>
             <select name="color" id="color">
                 <option value="transparent">None</option>
-                <option value="255,1,0">Red</option>
-                <option value="0,255,1">Green</option>
-                <option value="0,1,255">Blue</option>
-                <option value="255,255,0">Yellow</option>
+
+                <option disabled></option>
+                <option disabled>Premium:</option>
+                <option value="0,116,217">Blue</option>
+                <option value="0,31,63">Navy</option>
+                <option value="127,219,255">Aqua</option>
+                <option value="57,204,204">Teal</option>
+                <option value="46,204,64">Green</option>
+                <option value="1,255,112">Lime</option>
+                <option value="255,220,0">Yellow</option>
+                <option value="255,133,27">Orange</option>
+                <option value="255,65,54">Red</option>
+                <option value="133,20,75">Maroon</option>
+                <option value="240,18,190">Fuchsia</option>
+                <option value="177,13,201">Purple</option>
+                <option value="17,17,17">Black</option>
+                <option value="170,170,170">Grey</option>
+                <option value="221,221,221">Silver</option>
+
+                <option disabled></option>
+                <option disabled>Defaults:</option>
+                <option value="0,0,0">Max Black</option>
+                <option value="255,1,0">Max Red</option>
+                <option value="0,255,1">Max Green</option>
+                <option value="0,1,255">Max Blue</option>
+                <option value="255,255,0">Max Yellow</option>
             </select>
 
             <label for="opacity">Opacity</label>
@@ -67,6 +102,7 @@
                 <option value="ridge">Ridge</option>
                 <option value="inset">Inset</option>
                 <option value="outset">Outset</option>
+                <option value="hidden">No Outline</option>
             </select>
 
             <label for="outline_width">Outline Width</label>
@@ -78,6 +114,9 @@
                 <option value="5px">5px</option>
                 <option value="6px">6px</option>
             </select>
+
+            <label for="debug_enabled">Enable Debug</label>
+            <input type="checkbox" name="debug_enabled" id ="debug_enabled"/>
 
             <div id="status"></div>
             <button id="save" class="button button-outline">Save</button>

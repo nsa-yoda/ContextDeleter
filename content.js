@@ -1,16 +1,16 @@
-﻿var clickedElement; // the clicked element
-var clickedElementCopy; // copy of the clicked element for posterity
-var originalOutlineStyle; // contains the original styles of the element
+﻿let clickedElement; // the clicked element
+let clickedElementCopy; // copy of the clicked element for posterity
+let originalOutlineStyle; // contains the original styles of the element
 
-var contains = function (needle, indexOf) {
-    var findNaN = needle !== needle; // identify NaN needle
+let contains = function (needle, indexOf) {
+    let findNaN = needle !== needle; // identify NaN needle
     if (!findNaN && typeof Array.prototype.indexOf === 'function') {
         indexOf = Array.prototype.indexOf;
     } else {
         indexOf = function (needle) {
-            var i = -1, index = -1;
+            let i = -1, index = -1;
             for (i = 0; i < this.length; i++) {
-                var item = this[i];
+                let item = this[i];
                 if ((findNaN && item !== item) || item === needle) {
                     index = i;
                     break;
@@ -27,14 +27,16 @@ jQuery(document).on('mousedown', 'body', function (event) {
         highlightColor: '0,0,255',
         highlightOpacity: 0.3,
         outlineStyle: 'solid',
-        outlineWidth: '1px'
+        outlineWidth: '1px',
+        debugEnabled: false,
     }, function(items) {
-        var highlightColor = items.highlightColor;
-        var highlightOpacity = items.highlightOpacity;
-        var outlineStyle = items.outlineStyle;
-        var outlineWidth = items.outlineWidth;
+        let highlightColor = items.highlightColor;
+        let highlightOpacity = items.highlightOpacity;
+        let outlineStyle = items.outlineStyle;
+        let outlineWidth = items.outlineWidth;
+        let debugEnabled = items.debugEnabled;
 
-        var config = {
+        let config = {
             'event': {
                 'button': {
                     'target': [2],           // buttons to listen to target an element
@@ -44,7 +46,19 @@ jQuery(document).on('mousedown', 'body', function (event) {
             'outline': outlineWidth + ' ' + outlineStyle + ' rgba(' + highlightColor + ', ' + highlightOpacity + ')'    // default outline for selection
         };
 
-        if (highlightColor === "transparent") { config['outline'] = 'none'; }
+        if (highlightColor === "transparent") {
+            config['outline'] = 'none';
+            if(debugEnabled === true) {
+                console.log("ContextDeleterTarget INFO highlight color TRANSPARENT");
+            }
+        }
+
+        if (outlineStyle === 'hidden') {
+            config['outline'] = 'none';
+            if(debugEnabled === true) {
+                console.log("ContextDeleterTarget INFO outline style set to HIDDEN");
+            }
+        }
 
         if ( contains.call(config['event']['button']['target'], event.button) ) {
             // in case of re-targeting, reset the outline style of the old targeted element
@@ -62,11 +76,21 @@ jQuery(document).on('mousedown', 'body', function (event) {
             if ( clickedElement !== clickedElementCopy ) {
                 clickedElementCopy = clickedElement
             }
+
+            if(debugEnabled === true) {
+                console.log("ContextDeleterTarget: " + clickedElement);
+            }
         }
 
+        // Check if we receive an exit event
         if ( contains.call(config['event']['button']['exit'], event.button) ){
+            // Seems we did not want to delete the element
             if ( originalOutlineStyle !== null ){
+                // Reset the original styles since we did not delete the element
                 $(clickedElementCopy).css('outline', originalOutlineStyle);
+                if(debugEnabled === true) {
+                    console.log("ContextDeleter restored styles to: " + clickedElementCopy);
+                }
             }
         }
     });

@@ -1,19 +1,21 @@
 // Saves options to chrome.storage
 function save_options() {
     document.getElementById('status').textContent = '';
-    var color = document.getElementById('color').value;
-    var opacity = document.getElementById('opacity').value;
-    var outlineStyle = document.getElementById('outline_style').value;
-    var outlineWidth = document.getElementById('outline_width').value;
+    let color = document.getElementById('color').value;
+    let opacity = document.getElementById('opacity').value;
+    let outlineStyle = document.getElementById('outline_style').value;
+    let outlineWidth = document.getElementById('outline_width').value;
+    let debugEnabled = document.getElementById('debug_enabled').checked;
 
     chrome.storage.sync.set({
         highlightColor: color,
         highlightOpacity: opacity,
         outlineStyle: outlineStyle,
-        outlineWidth: outlineWidth
+        outlineWidth: outlineWidth,
+        debugEnabled: debugEnabled
     }, function() {
         // Update status to let user know options were saved.
-        var status = document.getElementById('status');
+        let status = document.getElementById('status');
         status.textContent = 'Options saved.';
     });
     event.preventDefault()
@@ -26,13 +28,34 @@ function restore_options() {
         highlightColor: 'blue',
         highlightOpacity: 0.3,
         outlineStyle: 'solid',
-        outlineWidth: '1px'
+        outlineWidth: '1px',
+        debugEnabled: false,
     }, function(items) {
         document.getElementById('color').value = items.highlightColor;
         document.getElementById('opacity').value = items.highlightOpacity;
         document.getElementById('outline_style').value = items.outlineStyle;
         document.getElementById('outline_width').value = items.outlineWidth;
+        document.getElementById('debug_enabled').checked = items.debugEnabled;
+        update_preview();
     });
 }
+
+let update_preview = function() {
+    document.getElementById('preview').style.outline = document.getElementById('outline_width').value + ' ' +
+                                 document.getElementById('outline_style').value + ' rgba(' +
+                                 document.getElementById('color').value + ', ' +
+                                 document.getElementById('opacity').value + ')';
+
+    if (document.getElementById('debug_enabled').checked) {
+        document.getElementById('hey_its_me_debug').style.display = 'inline';
+    } else {
+        document.getElementById('hey_its_me_debug').style.display = 'none';
+    }
+};
+
+
+document.getElementById('options_form').addEventListener('change', function (e) {
+    update_preview();
+});
 document.addEventListener('DOMContentLoaded', restore_options);
 document.getElementById('save').addEventListener('click', save_options);

@@ -1,4 +1,4 @@
-﻿var bkg = chrome.extension.getBackgroundPage();
+﻿let bkg = chrome.extension.getBackgroundPage();
 
 chrome.contextMenus.onClicked.addListener(function(info, tab){
     chrome.tabs.sendMessage(tab.id, {'action': 'deleteElement'});

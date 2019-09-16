@@ -3,6 +3,10 @@
     "message": "ContextDeleter",
     "description": "Extension name"
   },
+  "extNameShort": {
+    "message": "CDeleter",
+    "description": "Extension short name"
+  },
   "extDesc": {
     "message": "ContextDeleter vous permet de supprimer des éléments HTML.",
     "description": "Extension description"

@@ -28,7 +28,8 @@
             border: 1px solid black;
             width: 16rem;
             padding: 1rem;
-            margin-left: 26rem;
+            margin-left: auto;
+            margin-right: auto;
             background-color: white;
             text-align: center;
         }
@@ -52,6 +53,8 @@
     <form name="options_form" id="options_form">
         <div class="preview" id="preview">Preview <span id="hey_its_me_debug">[Debug]</span></div>
         <fieldset>
+            <h4>Outline Look & Feel Settings</h4>
+
             <label for="color">Outline color:</label>
             <select name="color" id="color">
                 <option value="transparent">None</option>
@@ -203,11 +206,30 @@
                 <option value="10px">10px</option>
             </select>
 
-            <label for="debug_enabled">Enable Debug</label>
+            <hr/>
+
+            <h4>Options Page Settings</h4>
+
+            <label for="debug_enabled">Enable Debug &raquo; Console Log</label>
             <input type="checkbox" name="debug_enabled" id ="debug_enabled"/>
 
             <label for="hide_title">Hide Title on Options Page</label>
             <input type="checkbox" name="hide_title" id ="hide_title"/>
+
+            <hr/>
+
+            <h4>Fade Outline Settings</h4>
+
+            <label for="fade_outline">Fade Outline</label>
+            <input type="checkbox" name="fade_outline" id="fade_outline"/>
+
+            <label for="fade_outline_time">Fade Outline over N seconds</label>
+            <input type="text" name="fade_outline_time" id="fade_outline_time" placeholder="5">
+
+            <label for="fade_outline_after">Fade Outline after N microseconds</label>
+            <input type="text" name="fade_outline_after" id="fade_outline_after" placeholder="250">
+
+            <hr/>
 
             <div id="status"></div>
             <button id="save" class="button button-outline">Save</button>

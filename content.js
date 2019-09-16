@@ -21,6 +21,40 @@ let contains = function (needle, indexOf) {
     return indexOf.call(this, needle) > -1;
 };
 
+let exit = function(event, config, originalOutlineStyle, clickedElementCopy, debugEnabled){
+    // Check if we receive an exit event
+    if ( contains.call(config['event']['button']['exit'], event.button) ){
+        // Seems we did not want to delete the element
+        if ( originalOutlineStyle !== null ){
+            // Reset the original styles since we did not delete the element
+            jQuery(clickedElementCopy).css('outline', originalOutlineStyle);
+            if(debugEnabled === true) {
+                console.log("ContextDeleter restored styles to: " + clickedElementCopy);
+            }
+            return true;
+        }
+    }
+    return false;
+};
+
+let fadeOutFunc = function(clickedElement, highlightColor, originalColor, timeInt, outlineWidth, outlineStyle, highlightOpacity, fadeOutlineAfter) {
+    let matchColors = /((\s*?\d{1,3}\s*?,?\s*?){3})/;
+    highlightColor = matchColors.exec(highlightColor);
+    if(originalColor.length > 1) {
+        highlightColor = highlightColor[0];
+    }
+
+    let fadeTime = parseInt(timeInt) * 1000;
+    setTimeout(function(){
+        $({alpha:1}).animate({alpha:0}, {
+            duration: fadeTime,
+            step: function(){
+                jQuery(clickedElement).css('outline', `${outlineWidth} ${outlineStyle} rgba(${highlightColor},${this.alpha})`);
+            }
+        });
+    }, parseInt(fadeOutlineAfter));
+};
+
 jQuery(document).on('mousedown', 'body', function (event) {
     chrome.storage.sync.get({
         highlightColor: '0,0,255',
@@ -28,12 +62,18 @@ jQuery(document).on('mousedown', 'body', function (event) {
         outlineStyle: 'solid',
         outlineWidth: '1px',
         debugEnabled: false,
+        fadeOutline: false,
+        fadeOutlineTime: '5',
+        fadeOutlineAfter: '250',
     }, function(items) {
         let highlightColor = items.highlightColor;
         let highlightOpacity = items.highlightOpacity;
         let outlineStyle = items.outlineStyle;
         let outlineWidth = items.outlineWidth;
         let debugEnabled = items.debugEnabled;
+        let fadeOutline = items.fadeOutline;
+        let fadeOutlineTime = items.fadeOutlineTime;
+        let fadeOutlineAfter = items.fadeOutlineAfter;
 
         // rebuild our config
         let config = {
@@ -65,6 +105,10 @@ jQuery(document).on('mousedown', 'body', function (event) {
             // set the target outline
             jQuery(clickedElement).css('outline', config['outline']);
 
+            if(fadeOutline === true){
+                fadeOutFunc(clickedElement, highlightColor, originalOutlineStyle, fadeOutlineTime, outlineWidth, outlineStyle, highlightOpacity,fadeOutlineAfter);
+            }
+
             // make a copy of the clicked element
             if ( clickedElement !== clickedElementCopy ) {
                 clickedElementCopy = clickedElement
@@ -75,17 +119,7 @@ jQuery(document).on('mousedown', 'body', function (event) {
             }
         }
 
-        // Check if we receive an exit event
-        if ( contains.call(config['event']['button']['exit'], event.button) ){
-            // Seems we did not want to delete the element
-            if ( originalOutlineStyle !== null ){
-                // Reset the original styles since we did not delete the element
-                jQuery(clickedElementCopy).css('outline', originalOutlineStyle);
-                if(debugEnabled === true) {
-                    console.log("ContextDeleter restored styles to: " + clickedElementCopy);
-                }
-            }
-        }
+        exit(event, config, originalOutlineStyle, clickedElementCopy, debugEnabled);
     });
 
 });

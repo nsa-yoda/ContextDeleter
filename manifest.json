@@ -1,6 +1,6 @@
 ﻿{
   "name": "__MSG_extName__",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "manifest_version": 2,
   "description": "__MSG_extDesc__",
   "permissions": [ 
@@ -23,7 +23,7 @@
         "https://*/*"
       ],
       "js": [
-        "jquery.slim.min.js",
+        "jquery.min.js",
         "content.js"
       ]
     }

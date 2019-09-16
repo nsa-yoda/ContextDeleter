@@ -7,6 +7,9 @@ function save_options() {
     let outlineWidth = document.getElementById('outline_width').value;
     let debugEnabled = document.getElementById('debug_enabled').checked;
     let hideTitle = document.getElementById('hide_title').checked;
+    let fadeOutline = document.getElementById('fade_outline').checked;
+    let fadeOutlineTime = document.getElementById('fade_outline_time').value;
+    let fadeOutlineAfter = document.getElementById('fade_outline_after').value;
 
     chrome.storage.sync.set({
         highlightColor: color,
@@ -14,7 +17,10 @@ function save_options() {
         outlineStyle: outlineStyle,
         outlineWidth: outlineWidth,
         debugEnabled: debugEnabled,
-        hideTitle: hideTitle
+        hideTitle: hideTitle,
+        fadeOutline: fadeOutline,
+        fadeOutlineTime: fadeOutlineTime,
+        fadeOutlineAfter: fadeOutlineAfter,
     }, function() {
         // Update status to let user know options were saved.
         let status = document.getElementById('status');
@@ -33,6 +39,9 @@ function restore_options() {
         outlineWidth: '1px',
         debugEnabled: false,
         hideTitle: false,
+        fadeOutline: false,
+        fadeOutlineTime: '5',
+        fadeOutlineAfter: '250',
     }, function(items) {
         document.getElementById('color').value = items.highlightColor;
         document.getElementById('opacity').value = items.highlightOpacity;
@@ -40,6 +49,9 @@ function restore_options() {
         document.getElementById('outline_width').value = items.outlineWidth;
         document.getElementById('debug_enabled').checked = items.debugEnabled;
         document.getElementById('hide_title').checked = items.hideTitle;
+        document.getElementById('fade_outline').checked = items.fadeOutline;
+        document.getElementById('fade_outline_time').value = items.fadeOutlineTime;
+        document.getElementById('fade_outline_after').value = items.fadeOutlineAfter;
         update_preview();
     });
 }

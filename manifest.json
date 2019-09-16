@@ -1,8 +1,9 @@
 ﻿{
   "name": "__MSG_extName__",
-  "short_name": "__MSG_extNameShort",
+  "short_name": "ContextDeleter",
   "version": "2.1.5",
   "manifest_version": 2,
+  "author": "Juan L. Sanchez",
   "description": "__MSG_extDesc__",
   "permissions": [ 
       "contextMenus", 

@@ -4,7 +4,7 @@
     "description": "Extension name"
   },
   "extNameShort": {
-    "message": "CDeleter",
+    "message": "ContextDeleter",
     "description": "Extension short name"
   },
   "extDesc": {

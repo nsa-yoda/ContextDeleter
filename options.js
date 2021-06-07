@@ -11,10 +11,10 @@ const defaultValues = {
 }
 
 /**
- * Updates the options preview values 
+ * Updates the options preview values
  * @param items
  */
-const update_options = function(items) {
+const update_options = function (items) {
   console.log("items", items);
   document.getElementById('color').value = items.highlightColor;
   document.getElementById('opacity').value = items.highlightOpacity;
@@ -77,7 +77,7 @@ const update_preview = function () {
 /**
  * Reset settings to default
  */
-const reset_settings = function() {
+const reset_settings = function () {
   console.log("Resetting", defaultValues)
   update_options(defaultValues);
   save_options(null);

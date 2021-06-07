@@ -3,6 +3,18 @@ let clickedElementCopy; // copy of the clicked element for posterity
 let originalOutlineStyle; // contains the original styles of the element
 const $ = jQuery;
 
+const defaultValues = {
+  highlightColor: '0,1,255',
+  highlightOpacity: 0.3,
+  outlineStyle: 'solid',
+  outlineWidth: '1px',
+  debugEnabled: false,
+  hideTitle: false,
+  fadeOutline: true,
+  fadeOutlineTime: '1',
+  fadeOutlineAfter: '25',
+}
+
 
 const contains = function (needle, indexOf) {
   const findNaN = (needle !== needle); // identify NaN needle
@@ -38,14 +50,8 @@ const exit = function (event, config, originalOutlineStyle, clickedElementCopy, 
 };
 
 const fadeOutFunc = function (clickedElement, highlightColor, originalColor, timeInt, outlineWidth, outlineStyle, highlightOpacity, fadeOutlineAfter) {
-  const matchColors = /((\s*?\d{1,3}\s*?,?\s*?){3})/;
-  console.log(highlightColor)
-  highlightColor = matchColors.exec(highlightColor);
-  console.log(highlightColor)
-    highlightColor = (originalColor.length > 1) ? highlightColor[0] : highlightColor;
-  console.log(originalColor)
-  console.log(highlightColor)
-  
+  highlightColor = /((\s*?\d{1,3}\s*?,?\s*?){3})/.exec(highlightColor);
+  highlightColor = (originalColor.length > 1) ? highlightColor[0] : highlightColor;
   setTimeout(function () {
     $({alpha: 1}).animate({alpha: 0}, {
       duration: parseInt(timeInt) * 1000,
@@ -57,20 +63,11 @@ const fadeOutFunc = function (clickedElement, highlightColor, originalColor, tim
 };
 
 const writeLog = function (message, isDebugEnabled = false) {
-    if(isDebugEnabled) console.log(message);
+  if (isDebugEnabled) console.log(message);
 }
 
 $(document).on('mousedown', 'body', function (event) {
-  chrome.storage.sync.get({
-    highlightColor: '0,0,255',
-    highlightOpacity: 0.3,
-    outlineStyle: 'solid',
-    outlineWidth: '1px',
-    debugEnabled: false,
-    fadeOutline: false,
-    fadeOutlineTime: '5',
-    fadeOutlineAfter: '250',
-  }, function (items) {
+  chrome.storage.sync.get(defaultValues, function (items) {
     const highlightColor = items.highlightColor;
     const highlightOpacity = items.highlightOpacity;
     const outlineStyle = items.outlineStyle;
@@ -81,6 +78,7 @@ $(document).on('mousedown', 'body', function (event) {
     const fadeOutlineAfter = items.fadeOutlineAfter;
 
     // rebuild our config
+    const outline = `${outlineWidth} ${outlineStyle} rgba(${highlightColor}, ${highlightOpacity})`
     const config = {
       'event': {
         'button': {
@@ -88,13 +86,8 @@ $(document).on('mousedown', 'body', function (event) {
           'exit': [1, 0] // buttons to listen to exit
         }
       },
-      'outline': `${outlineWidth} ${outlineStyle} rgba(${highlightColor}, ${highlightOpacity})` // default outline for selection
+      'outline': (highlightColor === "transparent" || outlineStyle === 'hidden') ? 'none' : outline
     };
-
-    if (highlightColor === "transparent" || outlineStyle === 'hidden') {
-      config['outline'] = 'none';
-      writeLog("ContextDeleterTarget INFO highlight color TRANSPARENT/HIDDEN", debugEnabled)
-    }
 
     if (contains.call(config['event']['button']['target'], event.button)) {
       // in case of re-targeting, reset the outline style of the old targeted element
@@ -120,3 +113,4 @@ $(document).on('mousedown', 'body', function (event) {
     exit(event, config, originalOutlineStyle, clickedElementCopy, debugEnabled);
   });
 });
+

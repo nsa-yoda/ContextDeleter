@@ -1,264 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>ContextDeleter Options</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,700">
-    <link rel="stylesheet" href="css/normalize.min.css">
-    <link rel="stylesheet" href="css/milligram.min.css">
-    <style>
-        body {
-            background-color: #f7f7f7;
-        }
-        .box {
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15), 0 0 3px rgba(0,0,0,0.15);
-            margin: 1em auto 0 auto;
-            padding: .99em;
-            position: relative;
-            overflow-x: auto;
-            word-wrap: normal;
-            width: 60%;
-            float: none;
-        }
-        .box > .heading > h1, .box > .heading > h3 {
-            text-align: center;
-            margin-bottom:0;
-        }
-        #preview {
-            border: 1px solid black;
-            width: 16rem;
-            padding: 1rem;
-            margin-left: auto;
-            margin-right: auto;
-            background-color: white;
-            text-align: center;
-        }
-        #hey_its_me_debug{
-            display: none;
-        }
-        #color > option {
-            text-transform: capitalize;
-        }
-        #reset_settings {
-            color: red;
-            border-color: red;
-            background-color: rgba(255, 0, 0, 0.1);
-        }
-        .button-large {
-            font-size: 1.4rem;
-            height: 4.5rem;
-            line-height: 4.5rem;
-            padding: 0 2rem;
-            width: 24rem;
-        }
-    </style>
+  <title>ContextDeleter Options</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,700" rel="stylesheet">
+  <link href="css/normalize.min.css" rel="stylesheet">
+  <link href="css/milligram.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f7f7f7;
+    }
+
+    .box {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15), 0 0 3px rgba(0, 0, 0, 0.15);
+      margin: 1em auto 0 auto;
+      padding: .99em;
+      position: relative;
+      overflow-x: auto;
+      word-wrap: normal;
+      width: 60%;
+      float: none;
+    }
+
+    .box > .heading > h1, .box > .heading > h3 {
+      text-align: center;
+      margin-bottom: 0;
+    }
+
+    #preview {
+      border: 1px solid black;
+      width: 16rem;
+      padding: 1rem;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: white;
+      text-align: center;
+    }
+
+    #hey_its_me_debug {
+      display: none;
+    }
+
+    #color > option {
+      text-transform: capitalize;
+    }
+
+    #reset_settings {
+      color: red;
+      border-color: red;
+      background-color: rgba(255, 0, 0, 0.1);
+    }
+
+    .button-large {
+      font-size: 1.4rem;
+      height: 4.5rem;
+      line-height: 4.5rem;
+      padding: 0 2rem;
+      width: 24rem;
+    }
+  </style>
 </head>
 <body>
 
 <div class="box">
-    <div class="heading" id="heading">
-        <h1>ContextDeleter</h1>
-        <h3>by <a href="http://juanleonardosanchez.com" target="_blank">Juan L. Sanchez</a></h3>
-    </div>
+  <div class="heading" id="heading">
+    <h1>ContextDeleter</h1>
+    <h3>by <a href="http://juanleonardosanchez.com" target="_blank">Juan L. Sanchez</a></h3>
+  </div>
 
-    <h2>Options</h2>
-    <form name="options_form" id="options_form">
-        <div class="preview" id="preview">Preview <span id="hey_its_me_debug">[Debug]</span></div>
-        <fieldset>
-            <h4>Outline Look & Feel Settings</h4>
+  <h2>Options</h2>
+  <form id="options_form" name="options_form">
+    <div class="preview" id="preview">Preview <span id="hey_its_me_debug">[Debug]</span></div>
+    <fieldset>
+      <h4>Outline Look & Feel Settings</h4>
 
-            <label for="color">Outline color:</label>
-            <select name="color" id="color">
-                <option value="transparent">None</option>
+      <label for="color">Outline color:</label>
+      <select id="color" name="color">
+        <option value="transparent">None</option>
 
-                <option disabled></option>
-                <option disabled>Defaults:</option>
-                <option value="0,0,0">Max Black</option>
-                <option value="255,1,0">Max Red</option>
-                <option value="0,255,1">Max Green</option>
-                <option value="0,1,255">Max Blue</option>
-                <option value="255,255,0">Max Yellow</option>
+        <option disabled></option>
+        <option disabled>Defaults:</option>
+        <option value="0,0,0">Max Black</option>
+        <option value="255,1,0">Max Red</option>
+        <option value="0,255,1">Max Green</option>
+        <option value="0,1,255">Max Blue</option>
+        <option value="255,255,0">Max Yellow</option>
 
-                <option disabled></option>
-                <option disabled>Premium:</option>
-                <option value="0,116,217">Blue</option>
-                <option value="0,31,63">Navy</option>
-                <option value="127,219,255">Aqua</option>
-                <option value="57,204,204">Teal</option>
-                <option value="46,204,64">Green</option>
-                <option value="1,255,112">Lime</option>
-                <option value="255,220,0">Yellow</option>
-                <option value="255, 255, 0">Bright Yellow</option>
-                <option value="255, 255, 224">Light Yellow</option>
-                <option value="255, 250, 205">Lemon Chiffon</option>
-                <option value="250, 250, 210">Light Goldenrod Yellow</option>
-                <option value="255, 239, 213">Papaya Whip</option>
-                <option value="255, 228, 181">Moccasin</option>
-                <option value="255, 218, 185">Peachpuff</option>
-                <option value="238, 232, 170">Pale Goldenrod</option>
-                <option value="240, 230, 140">Khaki</option>
-                <option value="189, 183, 107">Dark Khaki</option>
-                <option value="178, 34, 34">Firebrick</option>
-                <option value="220, 20, 60">Crimson</option>
-                <option value="139, 0, 0">Dark Red</option>
-                <option value="255, 192, 203">Pink</option>
-                <option value="255, 182, 193">Light Pink</option>
-                <option value="255, 105, 180">Hot Pink</option>
-                <option value="255, 20, 147">Deep Pink</option>
-                <option value="250, 128, 114">Salmon</option>
-                <option value="255, 160, 122">Light Salmon</option>
-                <option value="255, 127, 80">Coral</option>
-                <option value="255, 99, 71">Tomato</option>
-                <option value="255, 69, 0">Orange Red</option>
-                <option value="255, 140, 0">Dark Orange</option>
-                <option value="255, 165, 0">Orange</option>
-                <option value="255,133,27">Smooth Orange</option>
-                <option value="255,65,54">Red</option>
-                <option value="133,20,75">Maroon</option>
-                <option value="240,18,190">Fuchsia</option>
-                <option value="177,13,201">Purple</option>
-                <option value="17,17,17">Black</option>
-                <option value="221,221,221">Silver</option>
-                <option value="170,170,170">Grey</option>
-                <option value="211, 211, 211">Light Gray</option>
-                <option value="169, 169, 169">Darkgray</option>
-                <option value="128, 128, 128">Gray</option>
-                <option value="105, 105, 105">Dim Gray</option>
-                <option value="119, 136, 153">Light Slate Gray</option>
-                <option value="112, 128, 144">Slate Gray</option>
-                <option value="47, 79, 79">Dark Slate Gray</option>
-                <option value="240, 248, 255">Alice Blue</option>
-                <option value="248, 248, 255">Ghost White</option>
-                <option value="245, 245, 245">White Smoke</option>
-                <option value="255, 245, 238">Seashell</option>
-                <option value="245, 245, 220">Beige</option>
-                <option value="253, 245, 230">Old Lace</option>
-                <option value="255, 250, 240">Floral White</option>
-                <option value="255, 255, 240">Ivory</option>
-                <option value="250, 235, 215">Antique White</option>
-                <option value="255, 255, 255">White</option>
-                <option value="255, 250, 250">Snow</option>
-                <option value="218, 165, 32">Goldenrod</option>
-                <option value="184, 134, 11">Dark Goldenrod</option>
-                <option value="205, 133, 63">Peru</option>
-                <option value="210, 105, 30">Chocolate</option>
-                <option value="255, 248, 220">Cornsilk</option>
-                <option value="255, 235, 205">Blanched Almond</option>
-                <option value="255, 228, 196">Bisque</option>
-                <option value="255, 222, 173">Navajo White</option>
-                <option value="245, 222, 179">Wheat</option>
-                <option value="222, 184, 135">Burlywood</option>
-                <option value="210, 180, 140">Tan</option>
-                <option value="0, 255, 255">Cyan</option>
-                <option value="224, 255, 255">Light Cyan</option>
-                <option value="175, 238, 238">Pale Turquoise</option>
-                <option value="127, 255, 212">Aquamarine</option>
-                <option value="64, 224, 208">Turquoise</option>
-                <option value="72, 209, 204">Medium Turquoise</option>
-                <option value="0, 206, 209">Dark Turquoise</option>
-                <option value="95, 158, 160">Cadet Blue</option>
-                <option value="70, 130, 180">Steel Blue</option>
-                <option value="176, 196, 222">Light Steel Blue</option>
-                <option value="176, 224, 230">Powder Blue</option>
-                <option value="173, 216, 230">Light Blue</option>
-                <option value="135, 206, 235">Sky Blue</option>
-                <option value="135, 206, 250">Light Sky Blue</option>
-                <option value="0, 191, 255">Deep Sky Blue</option>
-                <option value="30, 144, 255">Dodger Blue</option>
-                <option value="100, 149, 237">Corn Flower Blue</option>
-                <option value="123, 104, 238">Medium Slate Blue</option>
-                <option value="65, 105, 225">Royal Blue</option>
-                <option value="0, 0, 255">Blue</option>
-                <option value="0, 0, 205">Medium Blue</option>
-                <option value="0, 0, 139">Dark Blue</option>
-                <option value="0, 0, 128">Navy</option>
-                <option value="25, 25, 112">Midnight Blue</option>
-            </select>
+        <option disabled></option>
+        <option disabled>Premium:</option>
+        <option value="0,116,217">Blue</option>
+        <option value="0,31,63">Navy</option>
+        <option value="127,219,255">Aqua</option>
+        <option value="57,204,204">Teal</option>
+        <option value="46,204,64">Green</option>
+        <option value="1,255,112">Lime</option>
+        <option value="255,220,0">Yellow</option>
+        <option value="255, 255, 0">Bright Yellow</option>
+        <option value="255, 255, 224">Light Yellow</option>
+        <option value="255, 250, 205">Lemon Chiffon</option>
+        <option value="250, 250, 210">Light Goldenrod Yellow</option>
+        <option value="255, 239, 213">Papaya Whip</option>
+        <option value="255, 228, 181">Moccasin</option>
+        <option value="255, 218, 185">Peachpuff</option>
+        <option value="238, 232, 170">Pale Goldenrod</option>
+        <option value="240, 230, 140">Khaki</option>
+        <option value="189, 183, 107">Dark Khaki</option>
+        <option value="178, 34, 34">Firebrick</option>
+        <option value="220, 20, 60">Crimson</option>
+        <option value="139, 0, 0">Dark Red</option>
+        <option value="255, 192, 203">Pink</option>
+        <option value="255, 182, 193">Light Pink</option>
+        <option value="255, 105, 180">Hot Pink</option>
+        <option value="255, 20, 147">Deep Pink</option>
+        <option value="250, 128, 114">Salmon</option>
+        <option value="255, 160, 122">Light Salmon</option>
+        <option value="255, 127, 80">Coral</option>
+        <option value="255, 99, 71">Tomato</option>
+        <option value="255, 69, 0">Orange Red</option>
+        <option value="255, 140, 0">Dark Orange</option>
+        <option value="255, 165, 0">Orange</option>
+        <option value="255,133,27">Smooth Orange</option>
+        <option value="255,65,54">Red</option>
+        <option value="133,20,75">Maroon</option>
+        <option value="240,18,190">Fuchsia</option>
+        <option value="177,13,201">Purple</option>
+        <option value="17,17,17">Black</option>
+        <option value="221,221,221">Silver</option>
+        <option value="170,170,170">Grey</option>
+        <option value="211, 211, 211">Light Gray</option>
+        <option value="169, 169, 169">Darkgray</option>
+        <option value="128, 128, 128">Gray</option>
+        <option value="105, 105, 105">Dim Gray</option>
+        <option value="119, 136, 153">Light Slate Gray</option>
+        <option value="112, 128, 144">Slate Gray</option>
+        <option value="47, 79, 79">Dark Slate Gray</option>
+        <option value="240, 248, 255">Alice Blue</option>
+        <option value="248, 248, 255">Ghost White</option>
+        <option value="245, 245, 245">White Smoke</option>
+        <option value="255, 245, 238">Seashell</option>
+        <option value="245, 245, 220">Beige</option>
+        <option value="253, 245, 230">Old Lace</option>
+        <option value="255, 250, 240">Floral White</option>
+        <option value="255, 255, 240">Ivory</option>
+        <option value="250, 235, 215">Antique White</option>
+        <option value="255, 255, 255">White</option>
+        <option value="255, 250, 250">Snow</option>
+        <option value="218, 165, 32">Goldenrod</option>
+        <option value="184, 134, 11">Dark Goldenrod</option>
+        <option value="205, 133, 63">Peru</option>
+        <option value="210, 105, 30">Chocolate</option>
+        <option value="255, 248, 220">Cornsilk</option>
+        <option value="255, 235, 205">Blanched Almond</option>
+        <option value="255, 228, 196">Bisque</option>
+        <option value="255, 222, 173">Navajo White</option>
+        <option value="245, 222, 179">Wheat</option>
+        <option value="222, 184, 135">Burlywood</option>
+        <option value="210, 180, 140">Tan</option>
+        <option value="0, 255, 255">Cyan</option>
+        <option value="224, 255, 255">Light Cyan</option>
+        <option value="175, 238, 238">Pale Turquoise</option>
+        <option value="127, 255, 212">Aquamarine</option>
+        <option value="64, 224, 208">Turquoise</option>
+        <option value="72, 209, 204">Medium Turquoise</option>
+        <option value="0, 206, 209">Dark Turquoise</option>
+        <option value="95, 158, 160">Cadet Blue</option>
+        <option value="70, 130, 180">Steel Blue</option>
+        <option value="176, 196, 222">Light Steel Blue</option>
+        <option value="176, 224, 230">Powder Blue</option>
+        <option value="173, 216, 230">Light Blue</option>
+        <option value="135, 206, 235">Sky Blue</option>
+        <option value="135, 206, 250">Light Sky Blue</option>
+        <option value="0, 191, 255">Deep Sky Blue</option>
+        <option value="30, 144, 255">Dodger Blue</option>
+        <option value="100, 149, 237">Corn Flower Blue</option>
+        <option value="123, 104, 238">Medium Slate Blue</option>
+        <option value="65, 105, 225">Royal Blue</option>
+        <option value="0, 0, 255">Blue</option>
+        <option value="0, 0, 205">Medium Blue</option>
+        <option value="0, 0, 139">Dark Blue</option>
+        <option value="0, 0, 128">Navy</option>
+        <option value="25, 25, 112">Midnight Blue</option>
+      </select>
 
-            <label for="opacity">Opacity</label>
-            <select name="opacity" id="opacity">
-                <option value="0.1">0.1</option>
-                <option value="0.2">0.2</option>
-                <option value="0.3">0.3</option>
-                <option value="0.4">0.4</option>
-                <option value="0.5">0.5</option>
-                <option value="0.6">0.6</option>
-                <option value="0.7">0.7</option>
-                <option value="0.8">0.8</option>
-                <option value="0.9">0.9</option>
-                <option value="1.0">1.0</option>
-            </select>
+      <label for="opacity">Opacity</label>
+      <select id="opacity" name="opacity">
+        <option value="0.1">0.1</option>
+        <option value="0.2">0.2</option>
+        <option value="0.3">0.3</option>
+        <option value="0.4">0.4</option>
+        <option value="0.5">0.5</option>
+        <option value="0.6">0.6</option>
+        <option value="0.7">0.7</option>
+        <option value="0.8">0.8</option>
+        <option value="0.9">0.9</option>
+        <option value="1.0">1.0</option>
+      </select>
 
-            <label for="outline_style">Outline Style</label>
-            <select name="outline_style" id="outline_style">
-                <option value="solid">Solid</option>
-                <option value="dotted">Dotted</option>
-                <option value="dashed">Dashed</option>
-                <option value="double">Double</option>
-                <option disabled></option>
-                <option value="groove">Groove</option>
-                <option value="ridge">Ridge</option>
-                <option value="inset">Inset</option>
-                <option value="outset">Outset</option>
-                <option disabled></option>
-                <option value="hidden">No Outline</option>
-            </select>
+      <label for="outline_style">Outline Style</label>
+      <select id="outline_style" name="outline_style">
+        <option value="solid">Solid</option>
+        <option value="dotted">Dotted</option>
+        <option value="dashed">Dashed</option>
+        <option value="double">Double</option>
+        <option disabled></option>
+        <option value="groove">Groove</option>
+        <option value="ridge">Ridge</option>
+        <option value="inset">Inset</option>
+        <option value="outset">Outset</option>
+        <option disabled></option>
+        <option value="hidden">No Outline</option>
+      </select>
 
-            <label for="outline_width">Outline Width</label>
-            <select name="outline_width" id="outline_width">
-                <option value="1px">1px</option>
-                <option value="2px">2px</option>
-                <option value="3px">3px</option>
-                <option value="4px">4px</option>
-                <option value="5px">5px</option>
-                <option value="6px">6px</option>
-                <option value="7px">7px</option>
-                <option value="8px">8px</option>
-                <option value="9px">9px</option>
-                <option value="10px">10px</option>
-            </select>
+      <label for="outline_width">Outline Width</label>
+      <select id="outline_width" name="outline_width">
+        <option value="1px">1px</option>
+        <option value="2px">2px</option>
+        <option value="3px">3px</option>
+        <option value="4px">4px</option>
+        <option value="5px">5px</option>
+        <option value="6px">6px</option>
+        <option value="7px">7px</option>
+        <option value="8px">8px</option>
+        <option value="9px">9px</option>
+        <option value="10px">10px</option>
+      </select>
 
-            <hr/>
+      <hr/>
 
-            <h4>Options Page Settings</h4>
+      <h4>Options Page Settings</h4>
 
-            <label for="debug_enabled">Enable Debug &raquo; Console Log</label>
-            <input type="checkbox" name="debug_enabled" id ="debug_enabled"/>
+      <label for="debug_enabled">Enable Debug &raquo; Console Log</label>
+      <input id="debug_enabled" name="debug_enabled" type="checkbox"/>
 
-            <label for="hide_title">Hide Title on Options Page</label>
-            <input type="checkbox" name="hide_title" id ="hide_title"/>
+      <label for="hide_title">Hide Title on Options Page</label>
+      <input id="hide_title" name="hide_title" type="checkbox"/>
 
-            <hr/>
+      <hr/>
 
-            <h4>Fade Outline Settings</h4>
+      <h4>Fade Outline Settings</h4>
 
-            <label for="fade_outline">Fade Outline</label>
-            <input type="checkbox" name="fade_outline" id="fade_outline"/>
+      <label for="fade_outline">Fade Outline</label>
+      <input id="fade_outline" name="fade_outline" type="checkbox"/>
 
-            <label for="fade_outline_time">Fade Outline over N seconds</label>
-            <input type="text" name="fade_outline_time" id="fade_outline_time" placeholder="5">
+      <label for="fade_outline_time">Fade Outline over N seconds</label>
+      <input id="fade_outline_time" name="fade_outline_time" placeholder="5" type="text">
 
-            <label for="fade_outline_after">Fade Outline after N microseconds</label>
-            <input type="text" name="fade_outline_after" id="fade_outline_after" placeholder="250">
-
-
-            <hr/>
-
-            <div id="status"></div>
-            <button id="save" class="button button-outline button-large">Save</button>
+      <label for="fade_outline_after">Fade Outline after N microseconds</label>
+      <input id="fade_outline_after" name="fade_outline_after" placeholder="250" type="text">
 
 
+      <hr/>
 
-            <hr/>
-            <hr/>
-            <hr/>
+      <div id="status"></div>
+      <button class="button button-outline button-large" id="save">Save</button>
 
-            <h4>Reset ContextDeleter Settings</h4>
 
-            <label for="fade_outline">Reset ContextDeleter Settings to Default</label>
-            <button class="button button-outline" name="reset_settings" id="reset_settings">Reset</button>
-        </fieldset>
-    </form>
+      <hr/>
+      <hr/>
+      <hr/>
+
+      <h4>Reset ContextDeleter Settings</h4>
+
+      <label for="fade_outline">Reset ContextDeleter Settings to Default</label>
+      <button class="button button-outline" id="reset_settings" name="reset_settings">Reset</button>
+    </fieldset>
+  </form>
 </div>
 
 <script src="options.js"></script>

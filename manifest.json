@@ -5,17 +5,17 @@
   "manifest_version": 3,
   "author": "Juan L. Sanchez",
   "description": "__MSG_extDesc__",
-  "permissions": [ 
-      "contextMenus", 
-      "tabs",
-      "storage"
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "storage"
   ],
   "host_permissions": [
     "http://*/*",
     "https://*/*",
     "https://fonts.googleapis.com/*"
   ],
-  "content_security_policy": {    
+  "content_security_policy": {
   },
   "background": {
     "service_worker": "background.js"
@@ -23,14 +23,16 @@
   "options_page": "options.html",
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "<all_urls>"
+      ],
       "js": [
         "jquery.min.js",
         "content.js"
       ]
     }
   ],
-  "minimum_chrome_version": "6.0.0.0",
+  "minimum_chrome_version": "26.0.0.0",
   "icons": {
     "16": "icons/16.png",
     "32": "icons/32.png",

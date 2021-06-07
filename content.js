@@ -1,132 +1,122 @@
 ﻿let clickedElement; // the clicked element
 let clickedElementCopy; // copy of the clicked element for posterity
 let originalOutlineStyle; // contains the original styles of the element
+const $ = jQuery;
 
-let contains = function (needle, indexOf) {
-    let findNaN = needle !== needle; // identify NaN needle
-    if (!findNaN && typeof Array.prototype.indexOf === 'function') {
-        indexOf = Array.prototype.indexOf;
-    } else {
-        indexOf = function (needle) {
-            let index = -1;
-            for (let i = 0; i < this.length; i++) {
-                if ((findNaN && this[i] !== this[i]) || this[i] === needle) {
-                    index = i;
-                    break;
-                }
-            }
-            return index;
-        };
-    }
-    return indexOf.call(this, needle) > -1;
+
+const contains = function (needle, indexOf) {
+  const findNaN = (needle !== needle); // identify NaN needle
+  if (!findNaN && typeof Array.prototype.indexOf === 'function') {
+    indexOf = Array.prototype.indexOf;
+  } else {
+    indexOf = function (needle) {
+      let index = -1;
+      for (let i = 0; i < this.length; i++) {
+        if ((findNaN && this[i] !== this[i]) || this[i] === needle) {
+          index = i;
+          break;
+        }
+      }
+      return index;
+    };
+  }
+  return indexOf.call(this, needle) > -1;
 };
 
-let exit = function(event, config, originalOutlineStyle, clickedElementCopy, debugEnabled){
-    // Check if we receive an exit event
-    if ( contains.call(config['event']['button']['exit'], event.button) ){
-        // Seems we did not want to delete the element
-        if ( originalOutlineStyle !== null ){
-            // Reset the original styles since we did not delete the element
-            jQuery(clickedElementCopy).css('outline', originalOutlineStyle);
-            if(debugEnabled === true) {
-                console.log("ContextDeleter restored styles to: " + clickedElementCopy);
-            }
-            return true;
-        }
+const exit = function (event, config, originalOutlineStyle, clickedElementCopy, debugEnabled) {
+  // Check if we receive an exit event
+  if (contains.call(config['event']['button']['exit'], event.button)) {
+    // Seems we did not want to delete the element
+    if (originalOutlineStyle !== null) {
+      // Reset the original styles since we did not delete the element
+      $(clickedElementCopy).css('outline', originalOutlineStyle);
+      writeLog(`ContextDeleter restored styles to: ${clickedElementCopy}`, debugEnabled)
+      return true;
     }
-    return false;
+  }
+  return false;
 };
 
-let fadeOutFunc = function(clickedElement, highlightColor, originalColor, timeInt, outlineWidth, outlineStyle, highlightOpacity, fadeOutlineAfter) {
-    let matchColors = /((\s*?\d{1,3}\s*?,?\s*?){3})/;
-    highlightColor = matchColors.exec(highlightColor);
-    if(originalColor.length > 1) {
-        highlightColor = highlightColor[0];
-    }
-
-    let fadeTime = parseInt(timeInt) * 1000;
-    setTimeout(function(){
-        $({alpha:1}).animate({alpha:0}, {
-            duration: fadeTime,
-            step: function(){
-                jQuery(clickedElement).css('outline', `${outlineWidth} ${outlineStyle} rgba(${highlightColor},${this.alpha})`);
-            }
-        });
-    }, parseInt(fadeOutlineAfter));
-};
-
-jQuery(document).on('mousedown', 'body', function (event) {
-    chrome.storage.sync.get({
-        highlightColor: '0,0,255',
-        highlightOpacity: 0.3,
-        outlineStyle: 'solid',
-        outlineWidth: '1px',
-        debugEnabled: false,
-        fadeOutline: false,
-        fadeOutlineTime: '5',
-        fadeOutlineAfter: '250',
-    }, function(items) {
-        let highlightColor = items.highlightColor;
-        let highlightOpacity = items.highlightOpacity;
-        let outlineStyle = items.outlineStyle;
-        let outlineWidth = items.outlineWidth;
-        let debugEnabled = items.debugEnabled;
-        let fadeOutline = items.fadeOutline;
-        let fadeOutlineTime = items.fadeOutlineTime;
-        let fadeOutlineAfter = items.fadeOutlineAfter;
-
-        // rebuild our config
-        let config = {
-            'event': {
-                'button': {
-                    'target': [2], // buttons to listen to target an element
-                    'exit': [1, 0] // buttons to listen to exit
-                }
-            },
-            'outline': `${outlineWidth} ${outlineStyle} rgba(${highlightColor}, ${highlightOpacity})` // default outline for selection
-        };
-
-        if (highlightColor === "transparent" || outlineStyle === 'hidden') {
-            config['outline'] = 'none';
-            if(debugEnabled === true) {
-                console.log("ContextDeleterTarget INFO highlight color TRANSPARENT/HIDDEN");
-            }
-        }
-
-        if ( contains.call(config['event']['button']['target'], event.button) ) {
-            // in case of re-targeting, reset the outline style of the old targeted element
-            if (clickedElementCopy !== null && jQuery(clickedElementCopy).css('outline') !== originalOutlineStyle){
-                jQuery(clickedElementCopy).css('outline', originalOutlineStyle);
-            }
-
-            clickedElement = event.target;
-            originalOutlineStyle = jQuery(clickedElement).css('outline'); // store the original outline style
-
-            // set the target outline
-            jQuery(clickedElement).css('outline', config['outline']);
-
-            if(fadeOutline === true){
-                fadeOutFunc(clickedElement, highlightColor, originalOutlineStyle, fadeOutlineTime, outlineWidth, outlineStyle, highlightOpacity,fadeOutlineAfter);
-            }
-
-            // make a copy of the clicked element
-            if ( clickedElement !== clickedElementCopy ) {
-                clickedElementCopy = clickedElement
-            }
-
-            if(debugEnabled === true) {
-                console.log("ContextDeleterTarget: " + clickedElement);
-            }
-        }
-
-        exit(event, config, originalOutlineStyle, clickedElementCopy, debugEnabled);
+const fadeOutFunc = function (clickedElement, highlightColor, originalColor, timeInt, outlineWidth, outlineStyle, highlightOpacity, fadeOutlineAfter) {
+  const matchColors = /((\s*?\d{1,3}\s*?,?\s*?){3})/;
+  console.log(highlightColor)
+  highlightColor = matchColors.exec(highlightColor);
+  console.log(highlightColor)
+    highlightColor = (originalColor.length > 1) ? highlightColor[0] : highlightColor;
+  console.log(originalColor)
+  console.log(highlightColor)
+  
+  setTimeout(function () {
+    $({alpha: 1}).animate({alpha: 0}, {
+      duration: parseInt(timeInt) * 1000,
+      step: function () {
+        $(clickedElement).css('outline', `${outlineWidth} ${outlineStyle} rgba(${highlightColor},${this.alpha})`);
+      }
     });
+  }, parseInt(fadeOutlineAfter));
+};
 
-});
+const writeLog = function (message, isDebugEnabled = false) {
+    if(isDebugEnabled) console.log(message);
+}
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.action === "deleteElement") {
-        jQuery(clickedElement).remove();
+$(document).on('mousedown', 'body', function (event) {
+  chrome.storage.sync.get({
+    highlightColor: '0,0,255',
+    highlightOpacity: 0.3,
+    outlineStyle: 'solid',
+    outlineWidth: '1px',
+    debugEnabled: false,
+    fadeOutline: false,
+    fadeOutlineTime: '5',
+    fadeOutlineAfter: '250',
+  }, function (items) {
+    const highlightColor = items.highlightColor;
+    const highlightOpacity = items.highlightOpacity;
+    const outlineStyle = items.outlineStyle;
+    const outlineWidth = items.outlineWidth;
+    const debugEnabled = items.debugEnabled;
+    const fadeOutline = items.fadeOutline;
+    const fadeOutlineTime = items.fadeOutlineTime;
+    const fadeOutlineAfter = items.fadeOutlineAfter;
+
+    // rebuild our config
+    const config = {
+      'event': {
+        'button': {
+          'target': [2], // buttons to listen to target an element
+          'exit': [1, 0] // buttons to listen to exit
+        }
+      },
+      'outline': `${outlineWidth} ${outlineStyle} rgba(${highlightColor}, ${highlightOpacity})` // default outline for selection
+    };
+
+    if (highlightColor === "transparent" || outlineStyle === 'hidden') {
+      config['outline'] = 'none';
+      writeLog("ContextDeleterTarget INFO highlight color TRANSPARENT/HIDDEN", debugEnabled)
     }
-    sendResponse({value: "ok"})
+
+    if (contains.call(config['event']['button']['target'], event.button)) {
+      // in case of re-targeting, reset the outline style of the old targeted element
+      if (clickedElementCopy !== null && $(clickedElementCopy).css('outline') !== originalOutlineStyle) {
+        $(clickedElementCopy).css('outline', originalOutlineStyle);
+      }
+
+      clickedElement = event.target;
+      originalOutlineStyle = $(clickedElement).css('outline'); // store the original outline style
+
+      // set the target outline
+      $(clickedElement).css('outline', config['outline']);
+
+      if (fadeOutline === true) {
+        fadeOutFunc(clickedElement, highlightColor, originalOutlineStyle, fadeOutlineTime, outlineWidth, outlineStyle, highlightOpacity, fadeOutlineAfter);
+      }
+
+      // make a copy of the clicked element
+      clickedElementCopy = (clickedElement !== clickedElementCopy) ? clickedElement : clickedElementCopy;
+      writeLog(`ContextDeleterTarget: ${clickedElement}`, debugEnabled)
+    }
+
+    exit(event, config, originalOutlineStyle, clickedElementCopy, debugEnabled);
+  });
 });

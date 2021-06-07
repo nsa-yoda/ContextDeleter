@@ -1,29 +1,29 @@
 ﻿{
   "name": "__MSG_extName__",
   "short_name": "ContextDeleter",
-  "version": "2.1.6",
-  "manifest_version": 2,
+  "version": "3.0.0",
+  "manifest_version": 3,
   "author": "Juan L. Sanchez",
   "description": "__MSG_extDesc__",
   "permissions": [ 
       "contextMenus", 
       "tabs",
-      "http://*/*",
-      "https://*/*",
-      "http://fonts.googleapis.com/",
-      "https://fonts.googleapis.com/",
       "storage"
   ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "https://fonts.googleapis.com/*"
+  ],
+  "content_security_policy": {    
+  },
   "background": {
-    "scripts": ["background.js"]
+    "service_worker": "background.js"
   },
   "options_page": "options.html",
   "content_scripts": [
     {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
+      "matches": ["<all_urls>"],
       "js": [
         "jquery.min.js",
         "content.js"

@@ -3,19 +3,6 @@ let clickedElementCopy; // copy of the clicked element for posterity
 let originalOutlineStyle; // contains the original styles of the element
 const $ = jQuery;
 
-const defaultValues = {
-  highlightColor: '0,1,255',
-  highlightOpacity: 0.3,
-  outlineStyle: 'solid',
-  outlineWidth: '1px',
-  debugEnabled: false,
-  hideTitle: false,
-  fadeOutline: true,
-  fadeOutlineTime: '1',
-  fadeOutlineAfter: '25',
-}
-
-
 const contains = function (needle, indexOf) {
   const findNaN = (needle !== needle); // identify NaN needle
   if (!findNaN && typeof Array.prototype.indexOf === 'function') {
@@ -66,8 +53,24 @@ const writeLog = function (message, isDebugEnabled = false) {
   if (isDebugEnabled) console.log(message);
 }
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if(request.ping) { sendResponse({pong: true}); return; }
+  /* Content script action */
+});
+
 $(document).on('mousedown', 'body', function (event) {
-  chrome.storage.sync.get(defaultValues, function (items) {
+  console.log("mousedown event");
+  chrome.storage.sync.get({
+    highlightColor: '0,1,255',
+    highlightOpacity: 0.3,
+    outlineStyle: 'solid',
+    outlineWidth: '1px',
+    debugEnabled: false,
+    hideTitle: false,
+    fadeOutline: true,
+    fadeOutlineTime: '1',
+    fadeOutlineAfter: '25',
+  }, function (items) {
     const highlightColor = items.highlightColor;
     const highlightOpacity = items.highlightOpacity;
     const outlineStyle = items.outlineStyle;
@@ -88,7 +91,10 @@ $(document).on('mousedown', 'body', function (event) {
       },
       'outline': (highlightColor === "transparent" || outlineStyle === 'hidden') ? 'none' : outline
     };
-
+    
+    console.log("config", config);
+    console.log("Event", config['event']['button']['target'], event.button)
+    
     if (contains.call(config['event']['button']['target'], event.button)) {
       // in case of re-targeting, reset the outline style of the old targeted element
       if (clickedElementCopy !== null && $(clickedElementCopy).css('outline') !== originalOutlineStyle) {

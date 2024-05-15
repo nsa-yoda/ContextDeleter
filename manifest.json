@@ -7,7 +7,6 @@
   "description": "__MSG_extDesc__",
   "permissions": [
     "contextMenus",
-    "tabs",
     "storage"
   ],
   "host_permissions": [

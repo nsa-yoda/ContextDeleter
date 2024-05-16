@@ -11,7 +11,7 @@
     "message": "ContextDeleter vous permet de supprimer des éléments HTML.",
     "description": "Extension description"
   },
-  "openContextMenuTitle": {
+  "extOpenContextMenuTitle": {
     "message": "Supprimer cet élément",
     "description": "Context menu button text"
   }

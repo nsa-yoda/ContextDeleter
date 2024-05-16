@@ -1,30 +1,4 @@
-﻿/**
- * workaround as chrome.i18n.getMessage is not available in service workers
- */
-const getMessage = async function (message) {
-  let locale = navigator.language.split('-')[0];
-
-  // hardcoded locale bounding for the locales we support
-  // this must be updated when we add a new locale
-  const _locales = ['en', 'es', 'fr', 'gb'];
-  if (!_locales.includes(locale)) {
-    console.log("ContextDeleter: Locale not found in Locales, defaulting to English")
-    locale = "en";
-  }
-
-  const jsonLocalFile = `_locales/${locale}/messages.json`;
-  return await fetch(jsonLocalFile)
-    .then(response => response.json())
-    .then(data => {
-      if (message in data && data[message].message) {
-        return data[message].message;
-      }
-    })
-    .catch(error => {
-      console.log(`ContextDeleter: Error in localization: ${error}`)
-      return ""
-    });
-}
+﻿const i18n = (name) => chrome.i18n.getMessage("ext"+name);
 
 const ensureSendMessage = function(tabId, message, callback){
   chrome.tabs.sendMessage(tabId, {ping: true}, function(response){
@@ -43,40 +17,38 @@ const ensureSendMessage = function(tabId, message, callback){
   });
 }
 
-/**
- * Add creation listeners on installed
- */
-chrome.runtime.onInstalled.addListener(async function () {
+chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
-    'id': 'ContextDeleterZap',
-    'type': 'normal',
-    'title': await getMessage('openContextMenuTitle'),
-    'contexts': ['all']
+    id: 'ContextDeleterZap',
+    type: 'normal',
+    title: i18n('OpenContextMenuTitle'),
+    contexts: ['all'],
+    visible: true,
   });
 
   chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     console.log("message", message)
     console.log("sender", sender)
     console.log("sendResponse", sendResponse)
-    if (message.action) {
-      if (message.action === "deleteElement") {
-        $(clickedElement).remove();
-        sendResponse({value: "ok"})
-      }
+    if (message.action === "deleteElement") {
+      // You might want to validate and handle the message action here
+      // For example, ensure that the clicked element exists before removing it
+      $(clickedElement).remove();
+      sendResponse({value: "ok"});
     }
   });
 
-  chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-    console.log("Sending message action deleteelement to tab " + tab.id)
-    chrome.tabs.sendMessage(tab.id, {'action': 'deleteElement'}, function (response) {
-      if (!chrome.runtime.lastError) {
-        // message processing code goes here
+  chrome.contextMenus.onClicked.addListener( (info, tab) => {
+    console.log("Sending message action deleteElement to tab " + tab.id)
+    // chrome.tabs.sendMessage
+    ensureSendMessage(tab.id, {'action': 'deleteElement'}, function (response) {
+      if (chrome.runtime.lastError) {
+        console.log("lastError", chrome.runtime.lastError)
+        // Handle errors here
       } else {
-        console.log(chrome.runtime.lastError)
-        // error handling code goes here
+        console.log("got response", response)
+        // Handle response here
       }
-      
-      console.log("got response", response)
     });
   });
 });

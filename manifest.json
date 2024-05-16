@@ -25,9 +25,21 @@
         "https://fonts.googleapis.com/*"
       ],
       "js": [
-        "jquery.min.js",
+        "jquery.min.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*",
+        "https://fonts.googleapis.com/*"
+      ],
+      "js": [
+        "helper.js",
         "content.js"
-      ]
+      ],
+      "run_at": "document_end"
     }
   ],
   "minimum_chrome_version": "92.0.4515.107",

@@ -13,10 +13,62 @@ If you prefer to sideload the extension, please download the ZIP file from the [
 
 Currently available in multiple languages:
 
-* English
-* Español
-* Français
-* Deutsch
+- Arabic
+- Amharic
+- Bulgarian
+- Bengali
+- Catalan
+- Czech
+- Danish
+- German
+- Greek
+- English
+- English (Australia)
+- English (Great Britain)
+- English (USA)
+- Spanish
+- Spanish (Latin America and Caribbean)
+- Estonian
+- Persian
+- Finnish
+- Filipino
+- French
+- Gujarati
+- Hebrew
+- Hindi
+- Croatian
+- Hungarian
+- Indonesian
+- Italian
+- Japanese
+- Kannada
+- Korean
+- Lithuanian
+- Latvian
+- Malayalam
+- Marathi
+- Malay
+- Dutch
+- Norwegian
+- Polish
+- Portuguese (Brazil)
+- Portuguese (Portugal)
+- Romanian
+- Russian
+- Slovak
+- Slovenian
+- Serbian
+- Swedish
+- Swahili
+- Tamil
+- Telugu
+- Thai
+- Turkish
+- Ukrainian
+- Vietnamese
+- Chinese (China)
+- Chinese (Taiwan)
+
 
 If you would like to contribute a translation, please feel free to do so. Locales are located in the `_locales` directory, and are sub-directoried according to the [Chrome Extension locales](https://developer.chrome.com/docs/extensions/reference/api/i18n#locales)
 

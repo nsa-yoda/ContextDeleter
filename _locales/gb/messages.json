@@ -11,7 +11,7 @@
     "message": "ContextDeleter Damit können Sie HTML-Elemente zu löschen.",
     "description": "Extension description"
   },
-  "openContextMenuTitle": {
+  "extOpenContextMenuTitle": {
     "message": "Löschen dieses Element",
     "description": "Context menu button text"
   }

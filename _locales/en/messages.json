@@ -11,7 +11,7 @@
     "message": "ContextDeleter allows you to delete HTML elements on the fly.",
     "description": "Extension description"
   },
-  "openContextMenuTitle": {
+  "extOpenContextMenuTitle": {
     "message": "Delete This Element",
     "description": "Context menu button text"
   }

@@ -82,6 +82,10 @@ Please be aware that Flash elements and dynamically generated HTML cannot be rem
 
 ## Version History
 
+### [3.0.2] - 2024-05-16
+#### Languages update
+- Add all supported languages to locales
+
 ### [3.0.1] - 2024-05-16
 #### API update and codebase cleanup
 - Enhances performance and stability by optimizing the codebase

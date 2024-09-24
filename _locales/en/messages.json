@@ -14,5 +14,9 @@
   "extOpenContextMenuTitle": {
     "message": "Delete This Element",
     "description": "Context menu button text"
+  },
+  "extOpenContextMenuPermanentTitle": {
+    "message": "Delete Element & Persist",
+    "description": "Context menu button text for permanently removing element"
   }
 }

@@ -8,6 +8,8 @@ const defaultValues = {
     fadeOutline: true,
     fadeOutlineTime: '1',
     fadeOutlineAfter: '25',
+    enableTemporaryDelete: true,
+    enablePermanentDelete: false
 }
 
 /**
@@ -15,16 +17,18 @@ const defaultValues = {
  * @param items
  */
 const update_options = function (items) {
-    console.log("items", items);
-    document.getElementById('color').value = items.highlightColor;
-    document.getElementById('opacity').value = items.highlightOpacity;
-    document.getElementById('outline_style').value = items.outlineStyle;
-    document.getElementById('outline_width').value = items.outlineWidth;
-    document.getElementById('debug_enabled').checked = items.debugEnabled;
-    document.getElementById('hide_title').checked = items.hideTitle;
-    document.getElementById('fade_outline').checked = items.fadeOutline;
-    document.getElementById('fade_outline_time').value = items.fadeOutlineTime;
-    document.getElementById('fade_outline_after').value = items.fadeOutlineAfter;
+    console.log("items", items)
+    document.getElementById('color').value = items.highlightColor
+    document.getElementById('opacity').value = items.highlightOpacity
+    document.getElementById('outline_style').value = items.outlineStyle
+    document.getElementById('outline_width').value = items.outlineWidth
+    document.getElementById('debug_enabled').checked = items.debugEnabled
+    document.getElementById('hide_title').checked = items.hideTitle
+    document.getElementById('fade_outline').checked = items.fadeOutline
+    document.getElementById('fade_outline_time').value = items.fadeOutlineTime
+    document.getElementById('fade_outline_after').value = items.fadeOutlineAfter
+    document.getElementById('enable_temporary_delete').checked = items.enableTemporaryDelete
+    document.getElementById('enable_permanent_delete').checked = items.enablePermanentDelete
 }
 
 /**
@@ -42,6 +46,8 @@ function save_options(event) {
         fadeOutline: document.getElementById('fade_outline').checked,
         fadeOutlineTime: document.getElementById('fade_outline_time').value,
         fadeOutlineAfter: document.getElementById('fade_outline_after').value,
+        enableTemporaryDelete: document.getElementById('enable_temporary_delete').value,
+        enablePermanentDelete: document.getElementById('enable_permanent_delete').value,
     }, function () {
         // Update status to let user know options were saved.
         document.getElementById('status').textContent = 'Options saved.';

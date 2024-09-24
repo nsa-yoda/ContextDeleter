@@ -3,11 +3,25 @@
 chrome.runtime.onInstalled.addListener(function () {
     chrome.contextMenus.create({
         id: 'ContextDeleterZap',
+        parentId: null,
         type: 'normal',
         title: i18n('OpenContextMenuTitle'),
         contexts: ['all'],
         visible: true,
     });
+
+    chrome.storage.sync.get({enableTemporaryDelete: true, enablePermanentDelete: false}, function (items) {
+        console.log("XX>", items)
+    })
+
+    chrome.contextMenus.create({
+        id: 'PermanentZapContextDeleter',
+        parentId: null,
+        type: 'normal',
+        title: i18n('OpenContextMenuPermanentTitle'),
+        contexts: ['all'],
+        visible: true,
+    })
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {

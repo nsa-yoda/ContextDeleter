@@ -42,6 +42,8 @@ $(document).on('mousedown', 'body', function (event) {
         fadeOutline: true,
         fadeOutlineTime: '1',
         fadeOutlineAfter: '25',
+        enableTemporaryDelete: true,
+        enablePermanentDelete: false
     }, function (items) {
         const {
             highlightColor,
@@ -51,10 +53,12 @@ $(document).on('mousedown', 'body', function (event) {
             debugEnabled,
             fadeOutline,
             fadeOutlineTime,
-            fadeOutlineAfter
+            fadeOutlineAfter,
+            enableTemporaryDelete,
+            enablePermanentDelete
         } = items;
 
-        const outline = (highlightColor === "transparent" || outlineStyle === 'hidden') ? 'none' : `${outlineWidth} ${outlineStyle} rgba(${highlightColor}, ${highlightOpacity})`;
+        // const outline = (highlightColor === "transparent" || outlineStyle === 'hidden') ? 'none' : `${outlineWidth} ${outlineStyle} rgba(${highlightColor}, ${highlightOpacity})`;
         const config = {
             'event': {
                 'button': {
